@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
     root: process.cwd(),
     rules: {
       "*.css": {
+        condition: { not: "foreign" },
         loaders: ["@tailwindcss/turbopack"],
         as: "*.css",
       },

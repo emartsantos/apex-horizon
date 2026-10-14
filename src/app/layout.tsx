@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
@@ -5,6 +6,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 import { SiteHeader } from "@/components/site/SiteHeader";
+import { SiteHeaderFallback } from "@/components/site/SiteHeaderFallback";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { JsonLd } from "@/components/site/JsonLd";
 import { getSiteSettings } from "@/lib/content";
@@ -72,7 +74,9 @@ export default async function RootLayout(props: LayoutProps<"/">) {
             Skip to content
           </span>
         </a>
-        <SiteHeader nav={settings.nav} />
+        <Suspense fallback={<SiteHeaderFallback />}>
+          <SiteHeader nav={settings.nav} />
+        </Suspense>
         <main id="main">{props.children}</main>
         <SiteFooter settings={settings} />
         <JsonLd data={organizationJsonLd()} />
