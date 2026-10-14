@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0a0b0d;
+  --color-ink-raised: #101217;
+  --color-ink-2: #14171d;
+  --color-ink-3: #1b1f26;
+
+  --color-paper: #f4f1ea;
+  --color-paper-dim: #e6e1d6;
+
+  --color-fg: #ece9e2;
+  --color-fg-muted: #a1a7b0;
+  --color-fg-subtle: #6d737d;
+
+  --color-line: #20242c;
+  --color-line-strong: #2c323c;
+
+  --color-accent: #e8623c;
+  --color-accent-amber: #f0924b;
+  --color-accent-deep: #a03e22;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, "Times New Roman",
+    serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  --tracking-tightest: -0.045em;
+  --tracking-tighter: -0.03em;
+  --tracking-label: 0.16em;
+}
+
+:root {
+  --horizon: linear-gradient(
+    90deg,
+    #f0a24b 0%,
+    #e8623c 52%,
+    #a03e22 100%
+  );
+  --shell-max: 1360px;
+  --gutter: clamp(1.25rem, 4vw, 4.5rem);
+  color-scheme: dark;
+}
+
+* {
+  border-color: var(--color-line);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-ink);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv05" 1, "ss01" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(232, 98, 60, 0.28);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-amber);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  transform: translateY(-160%);
+  transition: transform 0.16s ease-out;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Typographic rhythm for the display serif */
+.font-display {
+  font-optical-sizing: auto;
+}
+
+/* Horizon hairline — the brand device that anchors sections */
+.horizon-rule {
+  height: 1px;
+  width: 100%;
+  background: var(--horizon);
+}
+
+.horizon-rule-quiet {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--color-line-strong),
+    transparent 85%
+  );
+}
+
+/* Fine engineered grid backdrop used selectively behind hero art */
+.grid-veil {
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.028) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+  background-size: 88px 88px;
+}
+
+.text-horizon {
+  background: var(--horizon);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Scroll reveal (progressive enhancement) */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
