@@ -1,72 +1,148 @@
 import { NextResponse } from "next/server";
+import { createHash } from "node:crypto";
+import { z } from "zod";
+import { prisma, isDatabaseConfigured } from "@/lib/db/prisma";
+import { requestContext } from "@/lib/audit";
 
-type Payload = {
-  name?: string;
-  email?: string;
-  company?: string;
-  role?: string;
-  interest?: string;
-  size?: string;
-  message?: string;
-  consent?: string;
-};
+const schema = z.object({
+  name: z.string().trim().min(1, "Please add your name.").max(120),
+  email: z.string().trim().email("Please provide a valid email address.").max(200),
+  phone: z.string().trim().max(40).optional().or(z.literal("")),
+  state: z.string().trim().max(80).optional().or(z.literal("")),
+  reason: z.string().trim().min(1, "Please tell us how we can help.").max(120),
+  insurance: z.string().trim().max(80).optional().or(z.literal("")),
+  message: z
+    .string()
+    .trim()
+    .min(10, "Please add a little more detail.")
+    .max(4000),
+  consent: z.literal("on", {
+    message: "Please agree to the Privacy Notice.",
+  }),
+  company_website: z.string().max(0).optional().or(z.literal("")),
+});
 
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const attempts = new Map<string, { count: number; resetAt: number }>();
+const WINDOW_MS = 10 * 60 * 1000;
+const MAX_ATTEMPTS = 5;
+
+function rateLimited(key: string): boolean {
+  const now = Date.now();
+  const record = attempts.get(key);
+  if (!record || record.resetAt < now) {
+    attempts.set(key, { count: 1, resetAt: now + WINDOW_MS });
+    return false;
+  }
+  record.count += 1;
+  return record.count > MAX_ATTEMPTS;
+}
+
+function hashIp(ip: string | null): string | null {
+  if (!ip) return null;
+  const salt = process.env.REVALIDATE_SECRET ?? "lumina";
+  return createHash("sha256").update(`${ip}:${salt}`).digest("hex").slice(0, 32);
+}
+
+async function sendNotification(fields: {
+  name: string;
+  email: string;
+  phone?: string;
+  state?: string;
+  reason: string;
+  insurance?: string;
+  message: string;
+}) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const to = process.env.CONTACT_TO_EMAIL;
+  if (!apiKey || !to) return;
+
+  const { Resend } = await import("resend");
+  const resend = new Resend(apiKey);
+  const from = process.env.CONTACT_FROM_EMAIL ?? "Lumina Website <onboarding@resend.dev>";
+
+  const lines = [
+    `Name: ${fields.name}`,
+    `Email: ${fields.email}`,
+    fields.phone ? `Phone: ${fields.phone}` : null,
+    fields.state ? `State: ${fields.state}` : null,
+    `Reason: ${fields.reason}`,
+    fields.insurance ? `Payment: ${fields.insurance}` : null,
+    "",
+    "Message:",
+    fields.message,
+  ].filter(Boolean);
+
+  await resend.emails.send({
+    from,
+    to,
+    replyTo: fields.email,
+    subject: `New website enquiry — ${fields.reason}`,
+    text: lines.join("\n"),
+  });
+}
 
 export async function POST(request: Request) {
-  let payload: Payload;
+  const { ip, userAgent } = await requestContext();
+
+  if (rateLimited(ip ?? "unknown")) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 },
+    );
+  }
+
+  let payload: unknown;
   try {
-    payload = (await request.json()) as Payload;
+    payload = await request.json();
   } catch {
     return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
   }
 
-  const required: (keyof Payload)[] = [
-    "name",
-    "email",
-    "company",
-    "interest",
-    "message",
-    "consent",
-  ];
-  const missing = required.filter((key) => !payload[key]?.toString().trim());
-  if (missing.length > 0) {
+  const parsed = schema.safeParse(payload);
+  if (!parsed.success) {
     return NextResponse.json(
-      { error: `Missing required fields: ${missing.join(", ")}.` },
+      { error: parsed.error.issues[0]?.message ?? "Invalid submission." },
       { status: 422 },
     );
   }
 
-  if (!EMAIL.test(payload.email ?? "")) {
-    return NextResponse.json(
-      { error: "Please provide a valid work email address." },
-      { status: 422 },
-    );
+  const data = parsed.data;
+
+  if (data.company_website) {
+    return NextResponse.json({ ok: true });
   }
 
-  const record = {
-    ...payload,
-    receivedAt: new Date().toISOString(),
-    source: "website:contact",
-  };
-
-  const webhook = process.env.CRM_WEBHOOK_URL;
-  if (webhook) {
+  if (isDatabaseConfigured()) {
     try {
-      await fetch(webhook, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(record),
+      await prisma.contactSubmission.create({
+        data: {
+          name: data.name,
+          email: data.email,
+          subject: data.reason,
+          message: [data.phone && `Phone: ${data.phone}`, data.state && `State: ${data.state}`, data.insurance && `Payment: ${data.insurance}`, data.message]
+            .filter(Boolean)
+            .join("\n\n"),
+          ipHash: hashIp(ip),
+          userAgent: userAgent ?? null,
+        },
       });
-    } catch {
-      // Do not fail the visitor's submission if CRM forwarding is unavailable.
-      console.error("[contact] CRM forward failed");
+    } catch (error) {
+      console.error("[contact] failed to persist submission", error);
     }
-  } else {
-    console.info("[contact] enquiry received", {
-      company: record.company,
-      interest: record.interest,
+  }
+
+  try {
+    await sendNotification({
+      name: data.name,
+      email: data.email,
+      phone: data.phone || undefined,
+      state: data.state || undefined,
+      reason: data.reason,
+      insurance: data.insurance || undefined,
+      message: data.message,
     });
+  } catch (error) {
+    console.error("[contact] failed to send notification", error);
   }
 
   return NextResponse.json({ ok: true });

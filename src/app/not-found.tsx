@@ -4,34 +4,43 @@ import { ButtonLink } from "@/components/site/Button";
 
 export default function NotFound() {
   return (
-    <section className="pt-24 lg:pt-32">
+    <section className="pt-20 lg:pt-28">
       <Container>
-        <div className="flex max-w-2xl flex-col gap-8">
-          <p className="font-mono text-[0.68rem] uppercase tracking-label text-accent-amber">
-            404 · Not found
+        <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[1fr_1.4fr]">
+          <p
+            aria-hidden="true"
+            className="font-display text-[clamp(6rem,16vw,13rem)] leading-[0.8] text-accent"
+          >
+            404
           </p>
-          <h1 className="font-display text-[clamp(2.4rem,6vw,5rem)] font-light leading-[0.98] tracking-tightest text-fg">
-            This horizon doesn’t exist.
-          </h1>
-          <p className="text-lg leading-relaxed text-fg-muted">
-            The page you’re looking for has moved or never existed. Let’s get you
-            back to solid ground.
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <ButtonLink href="/" variant="primary" size="lg" arrow>
-              Back home
-            </ButtonLink>
-            <ButtonLink href="/contact" variant="outline" size="lg">
-              Contact us
-            </ButtonLink>
+          <div className="flex flex-col gap-8 lg:pt-4">
+            <span className="index-tab">Not found</span>
+            <h1 className="font-display text-[clamp(2.2rem,5vw,4rem)] leading-[0.98] text-fg">
+              We couldn&apos;t find that page.
+            </h1>
+            <p className="max-w-xl text-lg leading-relaxed text-fg-muted">
+              The page you&apos;re looking for has moved or never existed.
+              Let&apos;s get you back on track.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <ButtonLink href="/" variant="primary" size="lg" arrow>
+                Back home
+              </ButtonLink>
+              <ButtonLink href="/contact" variant="outline" size="lg">
+                Get started
+              </ButtonLink>
+            </div>
+            <p className="font-mono text-[0.66rem] uppercase tracking-label text-fg-subtle">
+              Or read about{" "}
+              <Link
+                href="/how-it-works"
+                className="link-underline text-fg"
+              >
+                how care works at Lumina
+              </Link>
+              .
+            </p>
           </div>
-          <p className="font-mono text-[0.66rem] uppercase tracking-label text-fg-subtle">
-            Or try the{" "}
-            <Link href="/platform" className="text-fg underline underline-offset-4">
-              platform overview
-            </Link>
-            .
-          </p>
         </div>
       </Container>
     </section>

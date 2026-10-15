@@ -10,53 +10,50 @@ import { getSiteSettings } from "@/lib/content";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Trust & security",
+  title: "Trust & safety",
   description:
-    "Security posture, compliance certifications, data residency, and assurance practices for the Apex Horizon enterprise cloud platform.",
+    "How Lumina Health & Wellness protects your information: licensed clinicians, HIPAA-aligned safeguards in the clinical platform, secure video, careful data practices, and accessible care.",
   path: "/trust",
 });
 
 const controls = [
   {
-    title: "Encryption",
+    title: "Licensed clinicians",
     detail:
-      "AES-256 at rest, TLS 1.3 in transit, with optional customer-managed keys held in hardware security modules.",
+      "Every visit is with a clinician who is licensed and credentialed to practice in your state. No chatbots, no scripts.",
   },
   {
-    title: "Access",
+    title: "Secure video",
     detail:
-      "Continuous, context-aware authorisation. No standing production access for personnel without time-boxed approval.",
+      "Visits happen over encrypted video designed for clinical use, so conversations stay between you and your clinician.",
   },
   {
-    title: "Residency",
+    title: "Your health information",
     detail:
-      "Region-pinned storage and processing with no extraterritorial operational access by default.",
+      "Protected health information is handled in our clinical platform under HIPAA-aligned safeguards and a signed patient agreement.",
   },
   {
-    title: "Monitoring",
+    title: "This website",
     detail:
-      "24/7 security operations, behavioural anomaly detection, and immutable audit logging streamed to your SIEM.",
+      "Our public website does not collect health information. It is for learning about Lumina, not for sharing symptoms or records.",
   },
   {
-    title: "Resilience",
+    title: "Data practices",
     detail:
-      "Multi-AZ by default, tested recovery objectives, and transparent incident reporting.",
+      "We collect only what we need to run the service, we do not sell your personal information, and we limit how partners may use it.",
   },
   {
-    title: "Supply chain",
+    title: "Accessibility",
     detail:
-      "Vetted dependencies, signed artefacts, and SBOMs available to enterprise customers.",
+      "We design and test toward WCAG 2.2 AA so reaching a clinician is simpler for everyone, including people with disabilities.",
   },
 ];
 
 const practices = [
-  {
-    label: "Certifications",
-    value: "SOC 2 Type II · ISO 27001 · ISO 42001",
-  },
-  { label: "Privacy", value: "GDPR · CCPA · HIPAA-eligible" },
-  { label: "Resilience", value: "99.99% availability SLA" },
-  { label: "Disclosure", value: "Coordinated vulnerability programme" },
+  { label: "Licensure", value: "Licensed clinicians in all 50 states" },
+  { label: "Privacy", value: "HIPAA-aligned safeguards · CCPA" },
+  { label: "Security", value: "SOC 2 Type II" },
+  { label: "Accessibility", value: "Designed and tested toward WCAG 2.2 AA" },
 ];
 
 export default async function TrustPage() {
@@ -67,14 +64,14 @@ export default async function TrustPage() {
       <PageHero
         breadcrumbs={[
           { href: "/", label: "Home" },
-          { href: "/trust", label: "Trust & security" },
+          { href: "/trust", label: "Trust & safety" },
         ]}
-        eyebrow="Trust centre"
-        title="Security you can verify, not just trust."
-        intro="Every control on this page is enforced by the platform and produces evidence you can hand to an auditor. If it isn't provable, we don't claim it."
+        eyebrow="Trust & safety"
+        title="Care you can trust, safeguards you can understand."
+        intro="Good care depends on trust. Here is how we protect your information, who provides your care, and how we keep the experience safe and accessible."
         aside={
-          <ButtonLink href="/contact" variant="outline" size="md" arrow>
-            Request assurance pack
+          <ButtonLink href="/legal/privacy" variant="outline" size="md" arrow>
+            Read our privacy policy
           </ButtonLink>
         }
       />
@@ -103,7 +100,7 @@ export default async function TrustPage() {
         <Container>
           <div className="grid gap-12 lg:grid-cols-[1fr_2fr]">
             <h2 className="font-display text-[clamp(1.6rem,2.6vw,2.2rem)] font-light leading-tight tracking-tight text-fg">
-              Assurance at a glance.
+              Safeguards at a glance.
             </h2>
             <dl className="flex flex-col">
               {settings.certifications.length > 0
@@ -121,28 +118,54 @@ export default async function TrustPage() {
                 : null}
             </dl>
           </div>
+
+          {settings.certifications.length > 0 ? (
+            <div className="mt-12">
+              <h2 className="font-mono text-[0.66rem] uppercase tracking-label text-fg-subtle">
+                What we hold ourselves to
+              </h2>
+              <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-3">
+                {settings.certifications.map((cert) => (
+                  <li
+                    key={cert}
+                    className="flex items-center gap-2 font-mono text-[0.66rem] uppercase tracking-label text-fg-muted"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="inline-block h-1.5 w-1.5 bg-accent"
+                    />
+                    {cert}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
           <div className="mt-10">
             <Rule quiet />
           </div>
           <p className="mt-6 max-w-2xl text-xs leading-relaxed text-fg-subtle">
-            Security questionnaires, penetration-test summaries, and compliance
-            reports are available to customers and prospects under NDA. We aim to
-            design and test against WCAG 2.2 AA and do not claim formal
-            certification beyond the standards listed above.
+            This public website does not collect health information. Protected
+            health information is handled within our clinical platform under
+            HIPAA-aligned safeguards and the patient agreement you sign before care
+            begins. The website itself is not claimed to be HIPAA-compliant.
+            Security documentation and accessibility details are available on
+            request. We aim to design and test against WCAG 2.2 AA and do not claim
+            formal certification beyond the standards listed above.
           </p>
         </Container>
       </section>
 
       <CtaBand
-        eyebrow="Due diligence"
-        title="Get the details your reviewers need."
-        intro="Request our security and compliance documentation, or book a session with our security team."
+        eyebrow="Questions?"
+        title="Ask us anything about privacy or safety."
+        intro="Our team is happy to walk through how we protect your information and deliver care."
       />
 
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", path: "/" },
-          { name: "Trust & security", path: "/trust" },
+          { name: "Trust & safety", path: "/trust" },
         ])}
       />
     </>

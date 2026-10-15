@@ -23,7 +23,7 @@ export type Service = {
   detail: RichBlock[];
 };
 
-export type Industry = {
+export type Specialty = {
   slug: string;
   title: string;
   tagline: string;
@@ -34,11 +34,11 @@ export type Industry = {
   detail: RichBlock[];
 };
 
-export type CaseStudy = {
+export type Story = {
   slug: string;
   client: string;
   sector: string;
-  industrySlug: string;
+  specialtySlug: string;
   title: string;
   summary: string;
   year: string;
@@ -63,21 +63,27 @@ export type Insight = {
   detail: RichBlock[];
 };
 
-export type Leader = {
+export type Provider = {
   slug: string;
-  name: string;
-  role: string;
-  focus: string;
+  displayName: string;
+  credentials: string;
+  specialty: string;
+  languages: string[];
   bio: string;
+  photoUrl?: string;
+  location: string;
+  acceptingNew: boolean;
+  order: number;
 };
 
-export type Job = {
+export type Role = {
   slug: string;
   title: string;
   department: string;
   location: string;
   type: string;
   summary: string;
+  postedAt: string;
   responsibilities: string[];
   requirements: string[];
 };

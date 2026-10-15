@@ -2,116 +2,255 @@ import type { Insight } from "@/lib/types";
 
 export const insights: Insight[] = [
   {
-    slug: "governing-ai-at-enterprise-scale",
-    title: "Governing AI at enterprise scale: a control-plane approach",
-    category: "AI Governance",
-    excerpt:
-      "Why the enterprises that succeed with AI treat governance as architecture rather than process — and what that changes about how they build.",
-    publishedAt: "2025-09-18",
-    readingMinutes: 8,
+    slug: "building-healthy-habits",
+    title: "Building healthy habits that last",
+    category: "Prevention",
+    excerpt: "Small, consistent changes can add up over time. Here are simple steps to build habits that fit into your daily life.",
+    publishedAt: "2025-10-01",
+    readingMinutes: 5,
     featured: true,
-    authorSlug: "lian-zhou",
+    authorSlug: "dr-lena-okafor",
     detail: [
       {
-        kind: "p",
-        text: "The enterprises shipping AI reliably have stopped treating governance as a gate at the end of a project. They have made it part of the platform itself — enforced where the request is made, not documented in a policy that arrives months later.",
+        kind: "h2",
+        text: "Start small and stay consistent",
       },
-      { kind: "h2", text: "Governance as architecture" },
       {
         kind: "p",
-        text: "When residency, access, and evaluation are platform primitives, they apply to every model by default. New work inherits the controls rather than negotiating them, and the marginal cost of compliance approaches zero.",
+        text: "Lasting change doesn't require perfection. Focus on one small habit at a time, like drinking more water or taking a short walk each day. Consistency matters more than intensity.",
+      },
+      {
+        kind: "p",
+        text: "Set clear cues and rewards that fit your routine. Track progress in a simple way and celebrate small wins. This builds momentum without adding stress.",
       },
       {
         kind: "list",
         items: [
-          "Policy decided at request time, not in a quarterly review.",
-          "Lineage captured automatically as a by-product of serving.",
-          "Controls mapped once and reused across frameworks.",
+          "Pick one specific habit to start with",
+          "Attach it to an existing routine",
+          "Track it for a few weeks before adding more",
+          "Be kind to yourself on off days",
         ],
       },
-      { kind: "h2", text: "The organisational consequence" },
+      {
+        kind: "quote",
+        text: "Small steps, taken consistently, are often the most powerful.",
+        attribution: "Dr. Lena Okafor",
+      },
       {
         kind: "p",
-        text: "A control plane changes the conversation between risk and engineering. Teams stop arguing about whether a model is allowed and start improving the evidence that shows it is. Governance becomes a shared surface rather than a handoff.",
+        text: "Note: This is general wellness information, not individualized medical advice. It's not a substitute for care from a licensed clinician.",
       },
     ],
   },
   {
-    slug: "zero-trust-is-a-data-problem",
-    title: "Zero trust is a data problem before it is a network problem",
-    category: "Security",
-    excerpt:
-      "Most zero-trust programmes under-invest in the question that matters most: what data are we protecting, and who can reach it?",
-    publishedAt: "2025-08-27",
+    slug: "managing-stress-in-daily-life",
+    title: "Managing stress in daily life",
+    category: "Mental health",
+    excerpt: "Practical ways to handle everyday stress and support your mental well-being.",
+    publishedAt: "2025-09-15",
     readingMinutes: 6,
     featured: true,
-    authorSlug: "prisha-nair",
+    authorSlug: "alex-chen-pmhnp",
     detail: [
       {
-        kind: "p",
-        text: "Zero trust is often framed as segmentation and identity. Those matter, but the hardest decisions are about data: classification, residency, and the access rules that follow sensitive records through their entire lifecycle.",
+        kind: "h2",
+        text: "Practical tools for stress relief",
       },
-      { kind: "h2", text: "Classify before you segment" },
       {
         kind: "p",
-        text: "Segmentation without classification produces a maze with no map. Decide what each datum is, where it may live, and who may reach it — then let the platform enforce that consistently across every hop.",
+        text: "Stress is a normal response to life's demands. Simple tools like deep breathing, short breaks, or talking with a trusted person can help you reset.",
+      },
+      {
+        kind: "p",
+        text: "Pay attention to what triggers stress and what helps you recover. Build a few go-to strategies so you can use them when needed.",
       },
       {
         kind: "list",
         items: [
-          "Access decisions tied to data classification, not just network zone.",
-          "Residency enforced at the storage layer.",
-          "Every access decision logged immutably.",
+          "Take 5 minutes for slow, intentional breathing",
+          "Step outside for a short walk",
+          "Set boundaries on your time and energy",
+          "Reach out for support when feeling overwhelmed",
         ],
       },
-    ],
-  },
-  {
-    slug: "the-latency-budget-for-production-ai",
-    title: "The latency budget for production AI",
-    category: "Engineering",
-    excerpt:
-      "A practical framework for keeping inference overhead in single-digit milliseconds without hollowing out safety controls.",
-    publishedAt: "2025-07-15",
-    readingMinutes: 7,
-    featured: false,
-    authorSlug: "lian-zhou",
-    detail: [
       {
-        kind: "p",
-        text: "Safety and speed are usually presented as a trade-off. In practice the trade-off comes from where controls are enforced. Run them at the edge of the request path and they cost latency; make them architecture and they cost almost nothing.",
+        kind: "quote",
+        text: "Caring for your mental health is just as important as caring for your physical health.",
+        attribution: "Alex Chen, PMHNP",
       },
-      { kind: "h2", text: "Spend latency where it buys accuracy" },
       {
         kind: "p",
-        text: "Budget your milliseconds deliberately. Reserve the expensive work for the steps that improve the answer, and keep the governance layer thin, local, and deterministic.",
+        text: "Note: This is general wellness information, not individualized medical advice. It's not a substitute for care from a licensed clinician.",
       },
     ],
   },
   {
-    slug: "data-sovereignty-beyond-checkboxes",
-    title: "Data sovereignty beyond checkboxes",
-    category: "Compliance",
-    excerpt:
-      "Residency clauses mean little if keys and operational access cross borders. What genuine sovereignty requires in practice.",
-    publishedAt: "2025-06-04",
+    slug: "nutrition-basics-for-busy-people",
+    title: "Nutrition basics for busy people",
+    category: "Nutrition",
+    excerpt: "Simple ways to eat well even when your schedule is packed.",
+    publishedAt: "2025-08-20",
     readingMinutes: 5,
     featured: false,
-    authorSlug: "prisha-nair",
+    authorSlug: "dr-miguel-rivera",
     detail: [
       {
-        kind: "p",
-        text: "A residency clause that moves data storage but leaves keys and operational access abroad is only half a guarantee. Genuine sovereignty covers the whole chain, from where bits rest to who can operate on them.",
+        kind: "h2",
+        text: "Simple strategies that work",
       },
-      { kind: "h2", text: "Keys are part of the boundary" },
       {
         kind: "p",
-        text: "If encryption keys and support access remain extraterritorial, the practical control has not moved. Sovereignty is proven by the absence of any foreign path to the data, including operational ones.",
+        text: "Eating well doesn't require elaborate meals. Focus on basics: lean protein, whole grains, fruits, and vegetables.",
+      },
+      {
+        kind: "p",
+        text: "Batch cook simple staples, keep snacks on hand, and make smart swaps. These small steps help you stay nourished without spending hours in the kitchen.",
+      },
+      {
+        kind: "list",
+        items: [
+          "Prep a few simple meals at the start of the week",
+          "Keep nuts or fruit within easy reach",
+          "Swap soda for water when you can",
+          "Fill half your plate with fruits or vegetables",
+        ],
+      },
+      {
+        kind: "quote",
+        text: "Good nutrition is about progress, not perfection.",
+        attribution: "Dr. Miguel Rivera",
+      },
+      {
+        kind: "p",
+        text: "Note: This is general wellness information, not individualized medical advice. It's not a substitute for care from a licensed clinician.",
+      },
+    ],
+  },
+  {
+    slug: "better-sleep-starts-tonight",
+    title: "Better sleep starts tonight",
+    category: "Sleep",
+    excerpt: "Practical tips to improve your sleep quality with small changes.",
+    publishedAt: "2025-07-10",
+    readingMinutes: 5,
+    featured: false,
+    authorSlug: "dr-amari-williams",
+    detail: [
+      {
+        kind: "h2",
+        text: "Create a sleep-friendly routine",
+      },
+      {
+        kind: "p",
+        text: "Consistent sleep and wake times help regulate your body's clock. Aim for a relaxing wind-down routine that signals it's time to rest.",
+      },
+      {
+        kind: "p",
+        text: "Limit screens before bed, keep your room cool and dark, and avoid large meals late at night. These changes can make a big difference over time.",
+      },
+      {
+        kind: "list",
+        items: [
+          "Go to bed and wake up at the same time each day",
+          "Unwind with a calm activity before bed",
+          "Keep your bedroom cool, dark, and quiet",
+          "Avoid caffeine in the late afternoon or evening",
+        ],
+      },
+      {
+        kind: "quote",
+        text: "Rest is a key part of overall well-being.",
+        attribution: "Dr. Amari Williams",
+      },
+      {
+        kind: "p",
+        text: "Note: This is general wellness information, not individualized medical advice. It's not a substitute for care from a licensed clinician.",
+      },
+    ],
+  },
+  {
+    slug: "protecting-your-heart-health",
+    title: "Protecting your heart health",
+    category: "Heart health",
+    excerpt: "Simple lifestyle choices that support a healthy heart.",
+    publishedAt: "2025-06-05",
+    readingMinutes: 6,
+    featured: false,
+    authorSlug: "marie-dela-cruz-pa",
+    detail: [
+      {
+        kind: "h2",
+        text: "Small steps for heart health",
+      },
+      {
+        kind: "p",
+        text: "Regular movement, balanced nutrition, and stress management all play a role in heart health. Even short walks can add up over time.",
+      },
+      {
+        kind: "p",
+        text: "Focus on what you can control: staying active, eating well, avoiding tobacco, and keeping up with check-ups. Small changes build over the years.",
+      },
+      {
+        kind: "list",
+        items: [
+          "Aim for regular physical activity each week",
+          "Choose whole foods over highly processed options",
+          "Manage stress through healthy outlets",
+          "Stay on track with recommended screenings",
+        ],
+      },
+      {
+        kind: "quote",
+        text: "Prevention is about small choices made day after day.",
+        attribution: "Marie Dela Cruz, PA-C",
+      },
+      {
+        kind: "p",
+        text: "Note: This is general wellness information, not individualized medical advice. It's not a substitute for care from a licensed clinician.",
+      },
+    ],
+  },
+  {
+    slug: "caring-for-your-whole-family",
+    title: "Caring for your whole family",
+    category: "Family care",
+    excerpt: "Tips to support wellness for every member of your family, from kids to adults.",
+    publishedAt: "2026-01-15",
+    readingMinutes: 5,
+    featured: false,
+    authorSlug: "dr-lena-okafor",
+    detail: [
+      {
+        kind: "h2",
+        text: "Wellness for all ages",
+      },
+      {
+        kind: "p",
+        text: "Family wellness means supporting physical and mental health for everyone. Focus on routines like regular meals, activity, and open conversations.",
+      },
+      {
+        kind: "p",
+        text: "Make time for check-ins, model healthy habits, and seek care early when something feels off. These habits create a strong foundation for the whole family.",
+      },
+      {
+        kind: "list",
+        items: [
+          "Share meals together when possible",
+          "Stay active as a family",
+          "Keep lines of communication open",
+          "Prioritize regular check-ups for all ages",
+        ],
+      },
+      {
+        kind: "quote",
+        text: "Healthy families start with small, shared habits.",
+        attribution: "Dr. Lena Okafor",
+      },
+      {
+        kind: "p",
+        text: "Note: This is general wellness information, not individualized medical advice. It's not a substitute for care from a licensed clinician.",
       },
     ],
   },
 ];
-
-export function getLocalInsight(slug: string) {
-  return insights.find((insight) => insight.slug === slug);
-}

@@ -32,7 +32,7 @@ export function buildMetadata({
       url,
       siteName: siteSettings.name,
       type,
-      locale: "en_SG",
+      locale: "en_US",
     },
     twitter: {
       card: "summary_large_image",
@@ -45,7 +45,7 @@ export function buildMetadata({
 export function organizationJsonLd() {
   return {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "MedicalOrganization",
     name: siteSettings.name,
     legalName: siteSettings.legalName,
     url: SITE_URL,
@@ -54,8 +54,7 @@ export function organizationJsonLd() {
     telephone: siteSettings.phone,
     address: {
       "@type": "PostalAddress",
-      streetAddress: siteSettings.hq,
-      addressCountry: "SG",
+      addressCountry: "US",
     },
     sameAs: siteSettings.social.map((s) => s.href),
   };
@@ -119,12 +118,12 @@ export function serviceJsonLd({
 }) {
   return {
     "@context": "https://schema.org",
-    "@type": "Service",
+    "@type": "MedicalProcedure",
     name,
     description,
-    provider: { "@type": "Organization", name: siteSettings.name },
+    provider: { "@type": "MedicalOrganization", name: siteSettings.name },
     url: absoluteUrl(path),
-    areaServed: "Global",
+    areaServed: "United States",
   };
 }
 

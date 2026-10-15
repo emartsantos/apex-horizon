@@ -1,36 +1,37 @@
 import type { MetadataRoute } from "next";
 import {
-  getCaseStudies,
-  getIndustries,
-  getInsights,
-  getJobs,
-  getLegalDocs,
   getServices,
+  getSpecialties,
+  getProviders,
+  getStories,
+  getInsights,
+  getLegalDocs,
 } from "@/lib/content";
 import { absoluteUrl } from "@/lib/seo";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [services, industries, studies, insights, jobs, legal] =
+  const [services, specialties, providers, stories, insights, legal] =
     await Promise.all([
       getServices(),
-      getIndustries(),
-      getCaseStudies(),
+      getSpecialties(),
+      getProviders(),
+      getStories(),
       getInsights(),
-      getJobs(),
       getLegalDocs(),
     ]);
 
   const now = new Date();
   const staticRoutes = [
     "",
-    "/platform",
     "/services",
-    "/industries",
-    "/case-studies",
+    "/specialties",
+    "/providers",
+    "/stories",
     "/insights",
-    "/company",
+    "/roles",
+    "/how-it-works",
     "/trust",
-    "/careers",
+    "/company",
     "/contact",
   ];
 
@@ -47,14 +48,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
-    ...industries.map((s) => ({
-      url: absoluteUrl(`/industries/${s.slug}`),
+    ...specialties.map((s) => ({
+      url: absoluteUrl(`/specialties/${s.slug}`),
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
-    ...studies.map((s) => ({
-      url: absoluteUrl(`/case-studies/${s.slug}`),
+    ...providers.map((s) => ({
+      url: absoluteUrl(`/providers/${s.slug}`),
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+    ...stories.map((s) => ({
+      url: absoluteUrl(`/stories/${s.slug}`),
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.6,
@@ -64,12 +71,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(s.publishedAt),
       changeFrequency: "monthly" as const,
       priority: 0.6,
-    })),
-    ...jobs.map((s) => ({
-      url: `${absoluteUrl("/careers")}#${s.slug}`,
-      lastModified: now,
-      changeFrequency: "weekly" as const,
-      priority: 0.5,
     })),
     ...legal.map((s) => ({
       url: absoluteUrl(`/legal/${s.slug}`),

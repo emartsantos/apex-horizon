@@ -20,23 +20,26 @@ export function PageHero({
   className?: string;
 }) {
   return (
-    <section className={cn("pt-16 lg:pt-24", className)}>
+    <section className={cn("pt-14 lg:pt-20", className)}>
       <Container>
         <Breadcrumbs items={breadcrumbs} className="mb-10" />
-        <div className="grid gap-12 lg:grid-cols-[2fr_1fr] lg:items-end">
-          <div className="flex flex-col gap-6">
+        <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end">
+          <div className="flex flex-col gap-7">
             {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
-            <h1 className="max-w-4xl font-display text-[clamp(2.5rem,6vw,5rem)] font-light leading-[0.98] tracking-tightest text-fg">
+            <h1 className="text-balance font-display text-[clamp(2.6rem,7vw,5.4rem)] leading-[0.94] tracking-tightest text-fg">
               {title}
             </h1>
+          </div>
+          <div className="flex flex-col gap-6 lg:pb-3">
             {intro ? (
-              <p className="max-w-2xl text-pretty text-lg leading-relaxed text-fg-muted">
+              <p className="text-pretty text-lg leading-relaxed text-fg-muted">
                 {intro}
               </p>
             ) : null}
+            {aside}
           </div>
-          {aside ? <div className="lg:pb-2">{aside}</div> : null}
         </div>
+        <div className="mt-14 horizon-rule" />
       </Container>
     </section>
   );

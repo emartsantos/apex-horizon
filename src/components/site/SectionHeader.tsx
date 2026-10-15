@@ -29,9 +29,9 @@ export function SectionHeader({
         className,
       )}
     >
-      <div className={cn("flex flex-col gap-5", align === "wide" && "max-w-2xl")}>
+      <div className={cn("flex flex-col gap-6", align === "wide" && "max-w-2xl")}>
         {eyebrow ? <Eyebrow index={index}>{eyebrow}</Eyebrow> : null}
-        <h2 className="font-display text-balance text-[clamp(2rem,4.6vw,3.6rem)] font-light leading-[1.02] tracking-tighter text-fg">
+        <h2 className="font-display text-balance text-[clamp(2.1rem,5vw,3.8rem)] leading-[0.99] text-fg">
           {title}
         </h2>
         {intro ? (

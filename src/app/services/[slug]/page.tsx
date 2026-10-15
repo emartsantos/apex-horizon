@@ -71,7 +71,7 @@ export default async function ServicePage(
             <aside className="flex flex-col gap-10 lg:sticky lg:top-24 lg:self-start">
               <div className="rounded-sm border border-line bg-ink-raised p-8">
                 <h2 className="font-mono text-[0.66rem] uppercase tracking-label text-fg-subtle">
-                  Capabilities
+                  What&apos;s included
                 </h2>
                 <ul className="mt-6 flex flex-col">
                   {service.capabilities.map((cap, i) => (
@@ -125,7 +125,7 @@ export default async function ServicePage(
                   className="w-fit"
                   arrow
                 >
-                  Discuss this
+                  Start a visit
                 </ButtonLink>
               </div>
             </aside>

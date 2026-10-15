@@ -18,13 +18,9 @@ export function Eyebrow({
       )}
     >
       {index ? (
-        <span className="text-accent-amber">{index}</span>
+        <span className="text-accent">{index}</span>
       ) : (
-        <span
-          aria-hidden="true"
-          className="inline-block h-px w-6"
-          style={{ background: "var(--horizon)" }}
-        />
+        <span aria-hidden="true" className="inline-block h-px w-6 bg-accent" />
       )}
       <span>{children}</span>
     </p>

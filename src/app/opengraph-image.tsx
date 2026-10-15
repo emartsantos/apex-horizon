@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Apex Horizon Technologies — secure cloud for enterprise AI";
+export const alt = "Lumina Health & Wellness — Telehealth, thoughtfully delivered";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -14,8 +14,9 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          backgroundColor: "#0a0b0d",
+          backgroundColor: "#f3eee3",
           padding: 72,
+          borderTop: "12px solid #a8431f",
         }}
       >
         <div
@@ -25,16 +26,27 @@ export default function OpengraphImage() {
             justifyContent: "space-between",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              fontSize: 22,
-              letterSpacing: 6,
-              textTransform: "uppercase",
-              color: "#a1a7b0",
-            }}
-          >
-            Apex Horizon Technologies
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <div
+              style={{
+                display: "flex",
+                width: 34,
+                height: 34,
+                borderRadius: 17,
+                border: "4px solid #a8431f",
+              }}
+            />
+            <div
+              style={{
+                display: "flex",
+                fontSize: 24,
+                letterSpacing: 5,
+                textTransform: "uppercase",
+                color: "#201b15",
+              }}
+            >
+              Lumina Health &amp; Wellness
+            </div>
           </div>
           <div
             style={{
@@ -42,10 +54,10 @@ export default function OpengraphImage() {
               fontSize: 20,
               letterSpacing: 4,
               textTransform: "uppercase",
-              color: "#f0924b",
+              color: "#a8431f",
             }}
           >
-            Enterprise cloud · AI
+            Telehealth · All 50 states
           </div>
         </div>
 
@@ -53,28 +65,28 @@ export default function OpengraphImage() {
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: 24,
+            gap: 22,
           }}
         >
           <div
             style={{
               display: "flex",
-              fontSize: 76,
+              fontSize: 84,
               lineHeight: 1.02,
-              color: "#ece9e2",
-              maxWidth: 900,
+              color: "#201b15",
+              maxWidth: 940,
             }}
           >
-            The secure cloud for enterprise AI.
+            Care that fits your life.
           </div>
           <div
             style={{
               display: "flex",
               fontSize: 26,
-              color: "#a1a7b0",
+              color: "#554d42",
             }}
           >
-            One control plane for compute, data, and zero-trust security.
+            Unhurried virtual care, across all fifty states.
           </div>
         </div>
 
@@ -83,7 +95,7 @@ export default function OpengraphImage() {
             display: "flex",
             height: 4,
             width: "100%",
-            background: "linear-gradient(90deg, #f0a24b, #e8623c, #a03e22)",
+            background: "linear-gradient(90deg, #a8431f, #94601a, #4e6142)",
           }}
         />
       </div>

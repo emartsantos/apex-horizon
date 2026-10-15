@@ -7,7 +7,7 @@ import { RichText } from "@/components/site/RichText";
 import { Rule } from "@/components/site/Rule";
 import { CtaBand } from "@/components/site/CtaBand";
 import { JsonLd } from "@/components/site/JsonLd";
-import { getInsight, getInsights, getLeader } from "@/lib/content";
+import { getInsight, getInsights, getProvider } from "@/lib/content";
 import { buildMetadata, articleJsonLd, breadcrumbJsonLd } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 
@@ -22,7 +22,11 @@ export async function generateMetadata(
   const { slug } = await props.params;
   const insight = await getInsight(slug);
   if (!insight)
-    return buildMetadata({ title: "Insight", description: "", path: "/insights" });
+    return buildMetadata({
+      title: "Article",
+      description: "",
+      path: "/insights",
+    });
   return buildMetadata({
     title: insight.title,
     description: insight.excerpt,
@@ -42,7 +46,7 @@ export default async function InsightArticlePage(
   ]);
   if (!insight) notFound();
 
-  const author = await getLeader(insight.authorSlug);
+  const author = await getProvider(insight.authorSlug);
   const related = insights
     .filter((item) => item.slug !== insight.slug)
     .slice(0, 2);
@@ -54,7 +58,7 @@ export default async function InsightArticlePage(
           <Breadcrumbs
             items={[
               { href: "/", label: "Home" },
-              { href: "/insights", label: "Insights" },
+              { href: "/insights", label: "Wellness hub" },
               { href: `/insights/${insight.slug}`, label: insight.title },
             ]}
             className="mb-10"
@@ -77,7 +81,7 @@ export default async function InsightArticlePage(
             </p>
             {author ? (
               <p className="mt-8 font-mono text-[0.68rem] uppercase tracking-label text-fg-subtle">
-                By {author.name} · {author.role}
+                By {author.displayName}, {author.credentials}
               </p>
             ) : null}
           </div>
@@ -139,6 +143,17 @@ export default async function InsightArticlePage(
         </section>
       ) : null}
 
+      <section className="mt-24">
+        <Container>
+          <p className="max-w-2xl text-xs leading-relaxed text-fg-subtle">
+            This article is general wellness information, not individualized
+            medical advice. It is not a substitute for diagnosis or treatment from
+            a licensed clinician. If you have questions about your own health, talk
+            with a clinician who knows your history.
+          </p>
+        </Container>
+      </section>
+
       <CtaBand />
 
       <JsonLd
@@ -147,13 +162,15 @@ export default async function InsightArticlePage(
           description: insight.excerpt,
           path: `/insights/${insight.slug}`,
           datePublished: insight.publishedAt,
-          authorName: author?.name ?? "Apex Horizon",
+          authorName: author
+            ? `${author.displayName}, ${author.credentials}`
+            : "Lumina Health & Wellness",
         })}
       />
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", path: "/" },
-          { name: "Insights", path: "/insights" },
+          { name: "Wellness hub", path: "/insights" },
           { name: insight.title, path: `/insights/${insight.slug}` },
         ])}
       />

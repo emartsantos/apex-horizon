@@ -12,11 +12,11 @@ export function Breadcrumbs({
 }) {
   return (
     <nav aria-label="Breadcrumb" className={className}>
-      <ol className="flex flex-wrap items-center gap-2 font-mono text-[0.68rem] uppercase tracking-label text-fg-subtle">
+      <ol className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.66rem] uppercase tracking-label text-fg-subtle">
         {items.map((item, i) => {
           const last = i === items.length - 1;
           return (
-            <li key={item.href} className="flex items-center gap-2">
+            <li key={item.href} className="flex items-center gap-3">
               {last ? (
                 <span aria-current="page" className="text-fg-muted">
                   {item.label}
@@ -25,12 +25,12 @@ export function Breadcrumbs({
                 <>
                   <Link
                     href={item.href}
-                    className="transition-colors hover:text-fg"
+                    className="transition-colors hover:text-accent"
                   >
                     {item.label}
                   </Link>
                   <span aria-hidden="true" className={cn("text-line-strong")}>
-                    /
+                    →
                   </span>
                 </>
               )}

@@ -42,3 +42,11 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+/src/generated/prisma
+
+# Local AI assistant tooling
+/.agents/
+/.claude/
+/.windsurf/
+/skills-lock.json

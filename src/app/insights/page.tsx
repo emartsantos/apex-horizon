@@ -9,9 +9,9 @@ import { getInsights } from "@/lib/content";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Insights",
+  title: "Wellness hub",
   description:
-    "Perspectives on governing AI at scale, zero-trust architecture, inference performance, and data sovereignty — written by the team building the platform.",
+    "Plain-spoken, practical articles on prevention, mental health, nutrition, sleep, and family care — general wellness information from the clinicians of Lumina Health & Wellness.",
   path: "/insights",
 });
 
@@ -24,11 +24,11 @@ export default async function InsightsPage() {
       <PageHero
         breadcrumbs={[
           { href: "/", label: "Home" },
-          { href: "/insights", label: "Insights" },
+          { href: "/insights", label: "Wellness hub" },
         ]}
-        eyebrow="Perspectives"
-        title="Notes from building secure AI infrastructure."
-        intro="Practical thinking for the people accountable for AI systems that have to survive procurement, audit, and production."
+        eyebrow="Wellness hub"
+        title="Practical reads for everyday health."
+        intro="Warm, plain-spoken guidance on prevention, mental health, sleep, nutrition, and family care. Written to be useful, not overwhelming."
         aside={
           <ul className="flex flex-wrap gap-x-4 gap-y-2">
             {categories.map((category) => (
@@ -55,12 +55,22 @@ export default async function InsightsPage() {
         </Container>
       </section>
 
+      <section className="mt-16">
+        <Container>
+          <p className="max-w-2xl text-xs leading-relaxed text-fg-subtle">
+            Articles in the wellness hub are general wellness information. They are
+            not a substitute for individualized medical advice, diagnosis, or
+            treatment. Please talk with a licensed clinician about your own health.
+          </p>
+        </Container>
+      </section>
+
       <CtaBand />
 
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "Home", path: "/" },
-          { name: "Insights", path: "/insights" },
+          { name: "Wellness hub", path: "/insights" },
         ])}
       />
     </>

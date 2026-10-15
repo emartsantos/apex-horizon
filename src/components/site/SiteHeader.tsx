@@ -76,18 +76,18 @@ export function SiteHeader({ nav }: { nav: NavGroup[] }) {
       className={cn(
         "sticky top-0 z-50 transition-colors duration-300",
         scrolled
-          ? "border-b border-line bg-ink/85 backdrop-blur-md"
+          ? "border-b border-line bg-ink/90 backdrop-blur-md"
           : "border-b border-transparent",
       )}
     >
       <div
-        className="mx-auto flex h-[72px] w-full items-center justify-between px-[var(--gutter)]"
+        className="mx-auto flex h-[76px] w-full items-center justify-between px-[var(--gutter)]"
         style={{ maxWidth: "var(--shell-max)" }}
       >
         <Logo />
 
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center gap-1">
+          <ul className="flex items-center gap-5 xl:gap-7">
             {nav.map((group) =>
               group.items ? (
                 <li
@@ -104,7 +104,7 @@ export function SiteHeader({ nav }: { nav: NavGroup[] }) {
                       setOpen(open === group.label ? null : group.label)
                     }
                     className={cn(
-                      "flex items-center gap-1.5 rounded-xs px-3 py-2 font-mono text-[0.7rem] uppercase tracking-label transition-colors",
+                      "flex items-center gap-1.5 py-2 text-[0.92rem] transition-colors",
                       isActive(group.href) || open === group.label
                         ? "text-fg"
                         : "text-fg-muted hover:text-fg",
@@ -114,7 +114,7 @@ export function SiteHeader({ nav }: { nav: NavGroup[] }) {
                     <span
                       aria-hidden="true"
                       className={cn(
-                        "text-[0.55rem] transition-transform duration-200",
+                        "text-[0.5rem] transition-transform duration-200",
                         open === group.label && "rotate-180",
                       )}
                     >
@@ -124,24 +124,24 @@ export function SiteHeader({ nav }: { nav: NavGroup[] }) {
 
                   <div
                     className={cn(
-                      "absolute left-0 top-full w-[19rem] origin-top-left pt-3 transition duration-200",
+                      "absolute left-0 top-full w-[21rem] origin-top-left pt-4 transition duration-200",
                       open === group.label
                         ? "visible opacity-100"
                         : "invisible -translate-y-1 opacity-0",
                     )}
                   >
-                    <div className="overflow-hidden rounded-sm border border-line-strong bg-ink-raised shadow-2xl shadow-black/60">
+                    <div className="overflow-hidden border border-line bg-ink-raised shadow-[0_24px_60px_-24px_rgba(32,27,21,0.35)]">
                       <div className="horizon-rule" />
-                      <ul className="p-2">
+                      <ul>
                         <li>
                           <Link
                             href={group.href}
-                            className="flex flex-col rounded-xs px-3 py-2.5 transition-colors hover:bg-white/[0.04]"
+                            className="flex flex-col gap-0.5 border-b border-line px-5 py-3.5 transition-colors hover:bg-ink-2"
                           >
-                            <span className="font-mono text-[0.62rem] uppercase tracking-label text-accent-amber">
+                            <span className="font-mono text-[0.6rem] uppercase tracking-label text-accent">
                               View all
                             </span>
-                            <span className="mt-0.5 text-sm text-fg">
+                            <span className="text-[0.95rem] text-fg">
                               {group.label} overview
                             </span>
                           </Link>
@@ -150,13 +150,13 @@ export function SiteHeader({ nav }: { nav: NavGroup[] }) {
                           <li key={item.href}>
                             <Link
                               href={item.href}
-                              className="flex flex-col rounded-xs px-3 py-2.5 transition-colors hover:bg-white/[0.04]"
+                              className="flex flex-col gap-0.5 px-5 py-3 transition-colors hover:bg-ink-2"
                             >
-                              <span className="text-sm text-fg">
+                              <span className="text-[0.95rem] text-fg">
                                 {item.label}
                               </span>
                               {item.description ? (
-                                <span className="mt-0.5 text-xs text-fg-subtle">
+                                <span className="text-xs text-fg-subtle">
                                   {item.description}
                                 </span>
                               ) : null}
@@ -172,9 +172,9 @@ export function SiteHeader({ nav }: { nav: NavGroup[] }) {
                   <Link
                     href={group.href}
                     className={cn(
-                      "block rounded-xs px-3 py-2 font-mono text-[0.7rem] uppercase tracking-label transition-colors",
+                      "text-[0.92rem] transition-colors",
                       isActive(group.href)
-                        ? "text-fg"
+                        ? "text-accent"
                         : "text-fg-muted hover:text-fg",
                     )}
                   >
@@ -186,21 +186,21 @@ export function SiteHeader({ nav }: { nav: NavGroup[] }) {
           </ul>
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-4 lg:flex xl:gap-6">
           <Link
             href="/contact"
-            className="font-mono text-[0.7rem] uppercase tracking-label text-fg-muted transition-colors hover:text-fg"
+            className="link-underline hidden text-[0.92rem] text-fg-muted transition-colors hover:text-fg xl:inline"
           >
             Contact
           </Link>
           <ButtonLink href="/contact" variant="primary" size="sm" arrow>
-            Book a demo
+            Start a visit
           </ButtonLink>
         </div>
 
         <button
           type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-xs border border-line-strong lg:hidden"
+          className="flex h-10 w-10 items-center justify-center border border-line-strong lg:hidden"
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -235,29 +235,34 @@ export function SiteHeader({ nav }: { nav: NavGroup[] }) {
       <div
         id="mobile-nav"
         hidden={!mobileOpen}
-        className="border-t border-line bg-ink lg:hidden"
+        className="fixed inset-x-0 bottom-0 top-[76px] overflow-y-auto border-t border-line bg-ink lg:hidden"
       >
         <nav
           aria-label="Mobile"
-          className="mx-auto max-h-[calc(100vh-72px)] overflow-y-auto px-[var(--gutter)] py-6"
+          className="mx-auto flex min-h-full flex-col px-[var(--gutter)] py-8"
           style={{ maxWidth: "var(--shell-max)" }}
         >
           <ul className="flex flex-col">
-            {nav.map((group) => (
-              <li key={group.label} className="border-b border-line py-3">
-                <Link
-                  href={group.href}
-                  className="block font-display text-2xl font-light tracking-tight text-fg"
-                >
-                  {group.label}
-                </Link>
+            {nav.map((group, i) => (
+              <li key={group.label} className="border-b border-line py-5">
+                <div className="flex items-baseline gap-4">
+                  <span className="font-mono text-[0.62rem] tracking-label text-accent">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <Link
+                    href={group.href}
+                    className="font-display text-[2rem] leading-none text-fg"
+                  >
+                    {group.label}
+                  </Link>
+                </div>
                 {group.items ? (
-                  <ul className="mt-3 flex flex-col gap-2">
+                  <ul className="mt-4 flex flex-col gap-2.5 pl-9">
                     {group.items.map((item) => (
                       <li key={item.href}>
                         <Link
                           href={item.href}
-                          className="text-sm text-fg-muted transition-colors hover:text-fg"
+                          className="text-[0.95rem] text-fg-muted transition-colors hover:text-accent"
                         >
                           {item.label}
                         </Link>
@@ -268,15 +273,15 @@ export function SiteHeader({ nav }: { nav: NavGroup[] }) {
               </li>
             ))}
           </ul>
-          <div className="mt-6">
+          <div className="mt-8">
             <ButtonLink
               href="/contact"
-              variant="primary"
+              variant="accent"
               size="lg"
               className="w-full"
               arrow
             >
-              Book a demo
+              Start a visit
             </ButtonLink>
           </div>
         </nav>

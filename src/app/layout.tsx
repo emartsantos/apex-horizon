@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
+import { Fraunces, IBM_Plex_Mono, Instrument_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -12,51 +12,53 @@ import { JsonLd } from "@/components/site/JsonLd";
 import { getSiteSettings } from "@/lib/content";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
 const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-fraunces",
   display: "swap",
 });
 
-const jetbrains = JetBrains_Mono({
+const instrument = Instrument_Sans({
   subsets: ["latin"],
-  variable: "--font-jetbrains",
+  variable: "--font-instrument",
+  display: "swap",
+});
+
+const plex = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-plex",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://apex-horizon.vercel.app",
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://lumina-health-wellness.com",
   ),
   title: {
-    default: "Apex Horizon Technologies — Secure cloud for enterprise AI",
-    template: "%s · Apex Horizon Technologies",
+    default: "Lumina Health & Wellness — Telehealth, thoughtfully delivered",
+    template: "%s · Lumina Health & Wellness",
   },
   description:
-    "Apex Horizon Technologies engineers enterprise cloud for secure, high-performance AI: one control plane for compute, data, zero-trust security, and continuous compliance.",
-  applicationName: "Apex Horizon Technologies",
+    "Lumina Health & Wellness is a nationwide direct-to-consumer telehealth practice: licensed clinicians, same-week virtual visits, and unhurried primary and preventive care — from wherever you are.",
+  applicationName: "Lumina Health & Wellness",
   keywords: [
-    "enterprise cloud",
-    "enterprise AI",
-    "zero-trust security",
-    "AI governance",
-    "data sovereignty",
-    "compliance automation",
-    "secure inference",
+    "telehealth",
+    "virtual primary care",
+    "online doctor",
+    "telemedicine",
+    "wellness",
+    "preventive care",
+    "mental health",
+    "prescription refills",
   ],
   robots: { index: true, follow: true },
   formatDetection: { telephone: false },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0b0d",
-  colorScheme: "dark",
+  themeColor: "#f3eee3",
+  colorScheme: "light",
 };
 
 export default async function RootLayout(props: LayoutProps<"/">) {
@@ -65,8 +67,9 @@ export default async function RootLayout(props: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       data-scroll-behavior="smooth"
-      className={`${inter.variable} ${fraunces.variable} ${jetbrains.variable}`}
+      className={`${fraunces.variable} ${instrument.variable} ${plex.variable}`}
     >
       <body className="min-h-dvh bg-ink text-fg antialiased">
         <a href="#main" className="skip-link">

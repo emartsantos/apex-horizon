@@ -8,9 +8,9 @@ import { getSiteSettings } from "@/lib/content";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Contact & demo",
+  title: "Contact",
   description:
-    "Book a 30-minute working session with the Apex Horizon platform team. Map your residency, latency, and compliance constraints to a concrete architecture.",
+    "Get in touch with Lumina Health & Wellness. Tell us what you need and a care coordinator will help you find the right clinician and get your first virtual visit on the calendar.",
   path: "/contact",
 });
 
@@ -24,9 +24,9 @@ export default async function ContactPage() {
           { href: "/", label: "Home" },
           { href: "/contact", label: "Contact" },
         ]}
-        eyebrow="Book a demo"
-        title="Start with your constraints."
-        intro="Tell us what you're accountable for. We'll come prepared with an architecture that respects it — not a slide deck."
+        eyebrow="Start a visit"
+        title="Tell us what you need."
+        intro="Share a little about what you're looking for. A Lumina care coordinator will help you find the right clinician and get your first virtual visit on the calendar — usually within days, not months."
       />
 
       <section className="mt-16">
@@ -34,6 +34,17 @@ export default async function ContactPage() {
           <div className="grid gap-16 lg:grid-cols-[1.4fr_1fr] lg:gap-24">
             <div>
               <Rule />
+              <div className="mt-10 flex flex-col gap-3 border border-line-strong bg-ink-raised p-6">
+                <h2 className="font-mono text-[0.66rem] uppercase tracking-label text-accent">
+                  Please read first
+                </h2>
+                <p className="text-sm leading-relaxed text-fg-muted">
+                  Please do not include medical or personal health information in
+                  this form. This form is not secure messaging and is not for
+                  symptoms, diagnoses, or records. If this is an emergency, call 911
+                  or go to the nearest emergency department.
+                </p>
+              </div>
               <div className="pt-12">
                 <ContactForm />
               </div>
@@ -60,7 +71,7 @@ export default async function ContactPage() {
 
               <div className="flex flex-col gap-4 border-t border-line pt-6">
                 <h2 className="font-mono text-[0.66rem] uppercase tracking-label text-fg-subtle">
-                  Headquarters
+                  The practice
                 </h2>
                 <p className="text-sm leading-relaxed text-fg-muted">
                   {settings.hq}
@@ -71,7 +82,7 @@ export default async function ContactPage() {
 
               <div className="flex flex-col gap-4 border-t border-line pt-6">
                 <h2 className="font-mono text-[0.66rem] uppercase tracking-label text-fg-subtle">
-                  Regions
+                  Where we practice
                 </h2>
                 <ul className="flex flex-wrap gap-x-4 gap-y-2">
                   {settings.regions.map((region) => (
@@ -87,11 +98,11 @@ export default async function ContactPage() {
 
               <div className="flex flex-col gap-4 border-t border-line pt-6">
                 <h2 className="font-mono text-[0.66rem] uppercase tracking-label text-fg-subtle">
-                  Security disclosure
+                  Privacy questions
                 </h2>
                 <p className="text-sm leading-relaxed text-fg-muted">
-                  Report vulnerabilities to security@apexhorizon.com. We operate a
-                  coordinated disclosure programme.
+                  Questions about your information or our privacy practices? Email
+                  our Privacy Officer at privacy@luminahealth.com.
                 </p>
               </div>
             </aside>

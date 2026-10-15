@@ -6,15 +6,14 @@ type Variant = "primary" | "accent" | "outline" | "ghost";
 type Size = "sm" | "md" | "lg";
 
 const base =
-  "group inline-flex items-center justify-center gap-2 rounded-xs font-mono text-[0.72rem] uppercase tracking-label transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50";
+  "group relative inline-flex items-center justify-center gap-2.5 rounded-none font-mono text-[0.72rem] uppercase tracking-label transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-paper text-ink hover:bg-paper-dim",
-  accent:
-    "bg-accent text-white hover:bg-[#f2734d] focus-visible:outline-ink",
+  primary: "bg-paper text-ink hover:bg-accent hover:text-ink",
+  accent: "bg-accent text-ink hover:bg-accent-deep",
   outline:
-    "border border-line-strong text-fg hover:border-fg-subtle hover:bg-white/[0.03]",
-  ghost: "text-fg-muted hover:text-fg",
+    "border border-line-strong text-fg hover:border-paper hover:bg-paper hover:text-ink",
+  ghost: "text-fg-muted hover:text-accent",
 };
 
 const sizes: Record<Size, string> = {

@@ -4,7 +4,7 @@ import { track as vercelTrack } from "@vercel/analytics";
 
 export type AnalyticsEvent =
   | "cta_click"
-  | "demo_request"
+  | "visit_request"
   | "form_submit"
   | "nav_open"
   | "outbound_click";

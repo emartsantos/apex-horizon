@@ -1,19 +1,19 @@
 import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 
-const typeToTag: Record<string, string> = {
-  siteSettings: "site-settings",
-  service: "services",
-  industry: "industries",
-  caseStudy: "case-studies",
-  insight: "insights",
-  leader: "leaders",
-  job: "jobs",
-  legalDoc: "legal",
-};
+const ALLOWED_TAGS = new Set([
+  "services",
+  "specialties",
+  "stories",
+  "insights",
+  "providers",
+  "roles",
+  "legal",
+  "site-settings",
+]);
 
 function isAuthorized(request: Request): boolean {
-  const secret = process.env.SANITY_REVALIDATE_SECRET;
+  const secret = process.env.REVALIDATE_SECRET;
   if (!secret) return false;
 
   const url = new URL(request.url);
@@ -29,31 +29,29 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  let payload: { _type?: string; tags?: string[] } = {};
+  let payload: { tags?: unknown } = {};
   try {
     payload = await request.json();
   } catch {
     payload = {};
   }
 
-  const tags = new Set<string>(payload.tags ?? []);
-  if (payload._type && typeToTag[payload._type]) {
-    tags.add(typeToTag[payload._type]);
-  }
+  const requested = Array.isArray(payload.tags)
+    ? payload.tags.filter(
+        (tag): tag is string => typeof tag === "string" && ALLOWED_TAGS.has(tag),
+      )
+    : [];
 
-  if (tags.size === 0) {
+  if (requested.length === 0) {
     return NextResponse.json(
-      { message: "No matching cache tags in payload", revalidated: [] },
+      { message: "No valid cache tags provided", revalidated: [] },
       { status: 200 },
     );
   }
 
-  for (const tag of tags) {
+  for (const tag of requested) {
     revalidateTag(tag, "max");
   }
 
-  return NextResponse.json({
-    revalidated: [...tags],
-    now: Date.now(),
-  });
+  return NextResponse.json({ revalidated: requested, now: Date.now() });
 }

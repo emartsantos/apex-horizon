@@ -12,7 +12,7 @@ import { JsonLd } from "@/components/site/JsonLd";
 export const metadata: Metadata = buildMetadata({
   title: "Services",
   description:
-    "Enterprise AI, zero-trust security, compliance and governance, and sovereign cloud platform — four disciplines delivered as one governed platform.",
+    "Virtual primary care, same-day urgent care, mental health and therapy, dermatology, prescriptions and refills, and women's health — delivered by licensed clinicians in all fifty states.",
   path: "/services",
 });
 
@@ -26,9 +26,9 @@ export default async function ServicesPage() {
           { href: "/", label: "Home" },
           { href: "/services", label: "Services" },
         ]}
-        eyebrow="Capabilities"
-        title="Four disciplines that compound."
-        intro="Each capability stands on its own, and each is stronger because the others share the same control plane, the same data boundaries, and the same evidence trail."
+        eyebrow="Care options"
+        title="Care that meets you where you are."
+        intro="Every service below is delivered by a licensed clinician over secure video. Each stands on its own, and each is better because your history, medications, and care team stay connected."
       />
 
       <section className="mt-24">
@@ -105,9 +105,9 @@ export default async function ServicesPage() {
       </section>
 
       <CtaBand
-        eyebrow="Working session"
-        title="See how the four combine on your constraints."
-        intro="Bring your residency, latency, and compliance requirements. We'll map them to a concrete architecture in a 30-minute session."
+        eyebrow="Not sure where to start?"
+        title="Tell us what's going on and we'll help you find the right care."
+        intro="A Lumina care coordinator will point you to the right service and get your first virtual visit on the calendar."
       />
 
       <JsonLd

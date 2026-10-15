@@ -1,11 +1,25 @@
 import Link from "next/link";
 import { cn, formatDate } from "@/lib/utils";
-import type { CaseStudy, Industry, Insight, Service } from "@/lib/types";
+import type { Insight, Provider, Service, Specialty, Story } from "@/lib/types";
 
 function Index({ value }: { value: number }) {
   return (
     <span className="font-mono text-[0.68rem] tracking-label text-fg-subtle">
       {String(value).padStart(2, "0")}
+    </span>
+  );
+}
+
+function Arrow({ className }: { className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={cn(
+        "text-fg-subtle transition-all duration-200 group-hover:translate-x-1 group-hover:text-accent",
+        className,
+      )}
+    >
+      →
     </span>
   );
 }
@@ -20,120 +34,120 @@ export function ServiceCard({
   return (
     <Link
       href={`/services/${service.slug}`}
-      className="group flex flex-col gap-6 border-t border-line py-8 transition-colors hover:border-line-strong"
+      className="group flex flex-col gap-6 border-t border-line py-9 transition-colors hover:border-accent"
     >
       <div className="flex items-center justify-between">
         <Index value={index + 1} />
-        <span
-          aria-hidden="true"
-          className="text-fg-subtle transition-all duration-200 group-hover:translate-x-1 group-hover:text-accent-amber"
-        >
-          →
-        </span>
+        <Arrow />
       </div>
-      <div className="flex flex-col gap-2">
-        <h3 className="font-display text-2xl font-light tracking-tight text-fg">
-          {service.title}
-        </h3>
-        <p className="font-mono text-[0.68rem] uppercase tracking-label text-accent-amber">
-          {service.tagline}
-        </p>
+      <div className="grid gap-x-10 gap-y-4 md:grid-cols-[1fr_1.15fr] md:items-start">
+        <div className="flex flex-col gap-2.5">
+          <h3 className="font-display text-[1.7rem] leading-tight text-fg">
+            {service.title}
+          </h3>
+          <p className="font-mono text-[0.66rem] uppercase tracking-label text-accent">
+            {service.tagline}
+          </p>
+        </div>
+        <div className="flex flex-col gap-5">
+          <p className="text-sm leading-relaxed text-fg-muted">
+            {service.summary}
+          </p>
+          <ul className="flex flex-wrap gap-x-5 gap-y-2">
+            {service.capabilities.slice(0, 3).map((cap) => (
+              <li
+                key={cap.title}
+                className="font-mono text-[0.62rem] uppercase tracking-label text-fg-subtle"
+              >
+                {cap.title}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-      <p className="max-w-md text-sm leading-relaxed text-fg-muted">
-        {service.summary}
-      </p>
-      <ul className="mt-1 flex flex-wrap gap-x-4 gap-y-2">
-        {service.capabilities.slice(0, 2).map((cap) => (
-          <li
-            key={cap.title}
-            className="font-mono text-[0.62rem] uppercase tracking-label text-fg-subtle"
-          >
-            {cap.title}
-          </li>
-        ))}
-      </ul>
     </Link>
   );
 }
 
-export function IndustryCard({
-  industry,
+export function SpecialtyCard({
+  specialty,
   index,
 }: {
-  industry: Industry;
+  specialty: Specialty;
   index: number;
 }) {
   return (
     <Link
-      href={`/industries/${industry.slug}`}
-      className="group flex flex-col justify-between gap-10 rounded-sm border border-line bg-ink-raised p-8 transition-colors hover:border-line-strong"
+      href={`/specialties/${specialty.slug}`}
+      className="group flex flex-col justify-between gap-14 border border-line bg-ink-raised p-7 transition-colors hover:border-accent hover:bg-ink-2"
     >
       <div className="flex items-start justify-between">
-        <Index value={index + 1} />
-        <span
-          aria-hidden="true"
-          className="text-fg-subtle transition-all duration-200 group-hover:translate-x-1 group-hover:text-accent-amber"
-        >
-          →
+        <span className="font-display text-[2.6rem] leading-none text-line-strong transition-colors duration-200 group-hover:text-accent">
+          {String(index + 1).padStart(2, "0")}
         </span>
+        <Arrow />
       </div>
       <div className="flex flex-col gap-3">
-        <h3 className="font-display text-[1.75rem] font-light tracking-tight text-fg">
-          {industry.title}
+        <h3 className="font-display text-[1.7rem] leading-tight text-fg">
+          {specialty.title}
         </h3>
-        <p className="font-mono text-[0.66rem] uppercase tracking-label text-accent-amber">
-          {industry.tagline}
+        <p className="font-mono text-[0.64rem] uppercase tracking-label text-accent">
+          {specialty.tagline}
         </p>
         <p className="text-sm leading-relaxed text-fg-muted">
-          {industry.summary}
+          {specialty.summary}
         </p>
       </div>
     </Link>
   );
 }
 
-export function CaseStudyCard({
-  study,
+export function StoryCard({
+  story,
   featured = false,
 }: {
-  study: CaseStudy;
+  story: Story;
   featured?: boolean;
 }) {
   return (
     <Link
-      href={`/case-studies/${study.slug}`}
+      href={`/stories/${story.slug}`}
       className={cn(
-        "group flex flex-col justify-between gap-10 border-t border-line py-10 transition-colors hover:border-line-strong",
+        "group flex flex-col justify-between gap-10 border-t border-line py-10 transition-colors hover:border-accent",
         featured && "lg:py-14",
       )}
     >
       <div className="flex flex-col gap-5">
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[0.66rem] uppercase tracking-label text-fg-subtle">
-          <span className="text-fg-muted">{study.client}</span>
-          <span aria-hidden="true">/</span>
-          <span>{study.sector}</span>
-          <span aria-hidden="true">/</span>
-          <span>{study.year}</span>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[0.64rem] uppercase tracking-label text-fg-subtle">
+          <span className="text-accent">{story.client}</span>
+          <span aria-hidden="true" className="text-line-strong">
+            /
+          </span>
+          <span>{story.sector}</span>
+          <span aria-hidden="true" className="text-line-strong">
+            /
+          </span>
+          <span>{story.year}</span>
         </div>
         <h3
           className={cn(
-            "max-w-3xl font-display font-light leading-tight tracking-tight text-fg",
+            "max-w-3xl font-display leading-[1.06] text-fg",
             featured
-              ? "text-[clamp(1.8rem,3.4vw,2.6rem)]"
+              ? "text-[clamp(1.9rem,3.6vw,2.9rem)]"
               : "text-[clamp(1.5rem,2.4vw,2rem)]",
           )}
         >
-          {study.title}
+          {story.title}
         </h3>
         <p className="max-w-2xl text-sm leading-relaxed text-fg-muted">
-          {study.summary}
+          {story.summary}
         </p>
       </div>
       <div className="flex flex-wrap items-end justify-between gap-6">
-        <dl className="flex flex-wrap gap-x-8 gap-y-3">
-          {study.results.slice(0, 3).map((metric) => (
+        <dl className="flex flex-wrap gap-x-10 gap-y-4">
+          {story.results.slice(0, 3).map((metric) => (
             <div key={metric.label} className="flex flex-col gap-1">
-              <dd className="font-display text-xl font-light tracking-tight text-fg">
+              <dd className="font-display text-xl leading-none text-fg">
                 {metric.value}
               </dd>
               <dt className="font-mono text-[0.6rem] uppercase tracking-label text-fg-subtle">
@@ -142,34 +156,34 @@ export function CaseStudyCard({
             </div>
           ))}
         </dl>
-        <span className="font-mono text-[0.66rem] uppercase tracking-label text-accent-amber">
-          Read case study →
+        <span className="font-mono text-[0.66rem] uppercase tracking-label text-accent">
+          Read story →
         </span>
       </div>
     </Link>
   );
 }
 
-export function InsightCard({
-  insight,
-}: {
-  insight: Insight;
-}) {
+export function InsightCard({ insight }: { insight: Insight }) {
   return (
     <Link
       href={`/insights/${insight.slug}`}
-      className="group flex flex-col gap-5 border-t border-line py-8 transition-colors hover:border-line-strong"
+      className="group flex flex-col gap-5 border-t border-line py-8 transition-colors hover:border-accent"
     >
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[0.64rem] uppercase tracking-label text-fg-subtle">
-        <span className="text-accent-amber">{insight.category}</span>
-        <span aria-hidden="true">/</span>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[0.62rem] uppercase tracking-label text-fg-subtle">
+        <span className="text-accent">{insight.category}</span>
+        <span aria-hidden="true" className="text-line-strong">
+          /
+        </span>
         <time dateTime={insight.publishedAt}>
           {formatDate(insight.publishedAt)}
         </time>
-        <span aria-hidden="true">/</span>
+        <span aria-hidden="true" className="text-line-strong">
+          /
+        </span>
         <span>{insight.readingMinutes} min</span>
       </div>
-      <h3 className="max-w-2xl font-display text-[clamp(1.4rem,2.2vw,1.9rem)] font-light leading-tight tracking-tight text-fg transition-colors group-hover:text-accent-amber">
+      <h3 className="max-w-2xl font-display text-[clamp(1.4rem,2.2vw,1.9rem)] leading-tight text-fg transition-colors group-hover:text-accent">
         {insight.title}
       </h3>
       <p className="max-w-xl text-sm leading-relaxed text-fg-muted">
@@ -177,4 +191,62 @@ export function InsightCard({
       </p>
     </Link>
   );
+}
+
+export function ProviderCard({
+  provider,
+  index,
+}: {
+  provider: Provider;
+  index?: number;
+}) {
+  return (
+    <Link
+      href={`/providers/${provider.slug}`}
+      className="group flex flex-col gap-6 border border-line bg-ink-raised p-7 transition-colors hover:border-accent"
+    >
+      <div className="flex items-start justify-between">
+        <span className="flex h-12 w-12 items-center justify-center border border-line-strong bg-ink-2 font-display text-lg text-accent">
+          {initials(provider.displayName)}
+        </span>
+        {typeof index === "number" ? <Index value={index + 1} /> : null}
+      </div>
+      <div className="flex flex-col gap-1.5">
+        <h3 className="font-display text-xl leading-tight text-fg">
+          {provider.displayName}
+        </h3>
+        <p className="font-mono text-[0.62rem] uppercase tracking-label text-fg-subtle">
+          {provider.credentials} · {provider.specialty}
+        </p>
+      </div>
+      <p className="line-clamp-3 text-sm leading-relaxed text-fg-muted">
+        {provider.bio}
+      </p>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-line pt-4 font-mono text-[0.6rem] uppercase tracking-label text-fg-subtle">
+        <span>{provider.location}</span>
+        <span aria-hidden="true" className="text-line-strong">
+          ·
+        </span>
+        <span className="flex items-center gap-2">
+          <span
+            aria-hidden="true"
+            className={cn(
+              "inline-block h-1.5 w-1.5",
+              provider.acceptingNew ? "bg-accent-moss" : "bg-line-strong",
+            )}
+          />
+          {provider.acceptingNew ? "Accepting new patients" : "Waitlist"}
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+function initials(name: string): string {
+  return name
+    .split(" ")
+    .filter((part) => !part.includes("."))
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
 }

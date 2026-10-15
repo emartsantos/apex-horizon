@@ -8,18 +8,23 @@ import { cn } from "@/lib/utils";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-const interests = [
-  "Enterprise AI",
-  "Zero-trust security",
-  "Compliance & governance",
-  "Cloud platform",
+const reasons = [
+  "Find a clinician",
+  "Primary & preventive care",
+  "Mental health",
+  "Chronic condition support",
+  "Women's health",
+  "Something else",
+];
+
+const insurers = [
+  "Paying out of pocket",
+  "Using insurance",
   "Not sure yet",
 ];
 
-const sizes = ["1–200", "201–1,000", "1,001–5,000", "5,000+"];
-
 const fieldClass =
-  "h-11 w-full rounded-xs border border-line-strong bg-ink px-3 text-sm text-fg placeholder:text-fg-subtle transition-colors focus:border-accent-amber focus:outline-none";
+  "h-11 w-full rounded-none border border-control bg-ink-raised px-3 text-sm text-fg placeholder:text-fg-subtle transition-colors focus:border-accent focus:outline-none";
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -32,7 +37,7 @@ export function ContactForm() {
 
     setStatus("submitting");
     setError(null);
-    track("demo_request", { interest: String(data.interest ?? "") });
+    track("visit_request", { reason: String(data.reason ?? "") });
 
     try {
       const res = await fetch("/api/contact", {
@@ -61,17 +66,18 @@ export function ContactForm() {
       <div
         role="status"
         aria-live="polite"
-        className="flex flex-col gap-4 rounded-sm border border-line-strong bg-ink-raised p-8"
+        className="flex flex-col gap-4 border border-line-strong bg-ink-raised p-8"
       >
-        <p className="font-mono text-[0.68rem] uppercase tracking-label text-accent-amber">
+        <p className="font-mono text-[0.68rem] uppercase tracking-label text-accent">
           Request received
         </p>
-        <h3 className="font-display text-2xl font-light tracking-tight text-fg">
-          Thank you — we’ll be in touch within one business day.
+        <h3 className="font-display text-2xl leading-tight text-fg">
+          Thank you — a care coordinator will reach out within one business day.
         </h3>
         <p className="text-sm leading-relaxed text-fg-muted">
-          A member of our platform team will reach out to schedule a working
-          session. For urgent matters, email enterprise@apexhorizon.com.
+          We&rsquo;ll help you find the right clinician and get your first virtual
+          visit on the calendar. If this is an emergency, call 911 or go to the
+          nearest emergency department.
         </p>
       </div>
     );
@@ -79,6 +85,20 @@ export function ContactForm() {
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-6" noValidate={false}>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute h-0 w-0 overflow-hidden opacity-0"
+      >
+        <label htmlFor="company_website">Leave this field empty</label>
+        <input
+          id="company_website"
+          name="company_website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="flex flex-col gap-2">
           <label
@@ -101,7 +121,7 @@ export function ContactForm() {
             htmlFor="email"
             className="font-mono text-[0.66rem] uppercase tracking-label text-fg-muted"
           >
-            Work email
+            Email
           </label>
           <input
             id="email"
@@ -110,58 +130,58 @@ export function ContactForm() {
             required
             autoComplete="email"
             className={fieldClass}
-            placeholder="jordan@company.com"
+            placeholder="jordan@example.com"
           />
         </div>
         <div className="flex flex-col gap-2">
           <label
-            htmlFor="company"
+            htmlFor="phone"
             className="font-mono text-[0.66rem] uppercase tracking-label text-fg-muted"
           >
-            Company
+            Phone (optional)
           </label>
           <input
-            id="company"
-            name="company"
-            required
-            autoComplete="organization"
+            id="phone"
+            name="phone"
+            type="tel"
+            autoComplete="tel"
             className={fieldClass}
-            placeholder="Company Inc."
+            placeholder="(555) 012-3456"
           />
         </div>
         <div className="flex flex-col gap-2">
           <label
-            htmlFor="role"
+            htmlFor="state"
             className="font-mono text-[0.66rem] uppercase tracking-label text-fg-muted"
           >
-            Role
+            State you live in
           </label>
           <input
-            id="role"
-            name="role"
-            autoComplete="organization-title"
+            id="state"
+            name="state"
+            autoComplete="address-level1"
             className={fieldClass}
-            placeholder="VP Engineering"
+            placeholder="California"
           />
         </div>
         <div className="flex flex-col gap-2">
           <label
-            htmlFor="interest"
+            htmlFor="reason"
             className="font-mono text-[0.66rem] uppercase tracking-label text-fg-muted"
           >
-            Primary interest
+            How can we help?
           </label>
           <select
-            id="interest"
-            name="interest"
+            id="reason"
+            name="reason"
             required
             defaultValue=""
             className={cn(fieldClass, "appearance-none")}
           >
             <option value="" disabled>
-              Select a focus area
+              Select an option
             </option>
-            {interests.map((item) => (
+            {reasons.map((item) => (
               <option key={item} value={item}>
                 {item}
               </option>
@@ -170,21 +190,21 @@ export function ContactForm() {
         </div>
         <div className="flex flex-col gap-2">
           <label
-            htmlFor="size"
+            htmlFor="insurance"
             className="font-mono text-[0.66rem] uppercase tracking-label text-fg-muted"
           >
-            Employees
+            Payment preference
           </label>
           <select
-            id="size"
-            name="size"
+            id="insurance"
+            name="insurance"
             defaultValue=""
             className={cn(fieldClass, "appearance-none")}
           >
             <option value="" disabled>
-              Select a range
+              Select an option
             </option>
-            {sizes.map((item) => (
+            {insurers.map((item) => (
               <option key={item} value={item}>
                 {item}
               </option>
@@ -198,7 +218,7 @@ export function ContactForm() {
           htmlFor="message"
           className="font-mono text-[0.66rem] uppercase tracking-label text-fg-muted"
         >
-          What are you trying to solve?
+          Anything else we should know?
         </label>
         <textarea
           id="message"
@@ -206,7 +226,7 @@ export function ContactForm() {
           rows={5}
           required
           className={cn(fieldClass, "h-auto py-3 leading-relaxed")}
-          placeholder="Describe your workload, constraints, and timeline."
+          placeholder="Please do not include medical or personal health information."
         />
       </div>
 
@@ -216,18 +236,18 @@ export function ContactForm() {
           name="consent"
           type="checkbox"
           required
-          className="mt-1 h-4 w-4 shrink-0 rounded-xs border border-line-strong bg-ink accent-[#e8623c]"
+          className="mt-1 h-4 w-4 shrink-0 rounded-none border border-control bg-ink-raised accent-accent"
         />
         <label htmlFor="consent" className="text-xs leading-relaxed text-fg-muted">
-          I agree that Apex Horizon may process my details to respond to this
-          enquiry, in line with the{" "}
+          I agree that Lumina Health &amp; Wellness may contact me about this
+          request, in line with the{" "}
           <Link
             href="/legal/privacy"
             className="text-fg underline underline-offset-2"
           >
             Privacy Notice
           </Link>
-          .
+          . I understand this form is not for medical information.
         </label>
       </div>
 
@@ -240,14 +260,14 @@ export function ContactForm() {
           disabled={status === "submitting"}
           className="w-fit"
         >
-          {status === "submitting" ? "Sending…" : "Book a demo"}
+          {status === "submitting" ? "Sending…" : "Start a visit"}
         </Button>
         <p
           role="alert"
           aria-live="polite"
           className={cn(
             "min-h-5 font-mono text-[0.66rem] uppercase tracking-label",
-            status === "error" ? "text-accent-amber" : "text-transparent",
+            status === "error" ? "text-red-700" : "text-transparent",
           )}
         >
           {error ?? "\u00A0"}
